@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.title("Pardon Runesu"
+st.title("Amanuel Teklehaimanot"
 )
 st.markdown(
 """
