@@ -1,73 +1,60 @@
+# Dashboard.py (compact)
 import streamlit as st
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
+import plotly.express as px
 
-st.set_page_config(
-    page_title="Amanuel Dashboard",
-    page_icon="👋",
-)
+st.set_page_config(page_title="Amanuel Dashboard", page_icon="👋")
 
-# Sidebar configuration
-st.sidebar.image("./assets/project-logo.jpg",)
-tab = st.sidebar.radio(
-    "Navigate",
-    ["Home", "Project", "Data"]
-)
+# Sidebar
+tab = st.sidebar.radio("Navigate", ["Home", "Project", "Data"])
 st.sidebar.success("Select a tab above.")
 
-# # Page information
+# Pages
 if tab == "Home":
-    st.write("# Welcome to Amanuel Dashboard!")
-    st.write("## Aims:")
-    st.markdown("""
-        Different data visualizations and analyses. 
-    """)
+    st.title("Welcome to Amanuel Dashboard")
+    st.caption("Simple Streamlit layout with widgets, a table, and a chart using synthetic data.")
 
 elif tab == "Project":
-    st.write("## Project")
-    st.markdown("""
-        Developing of a machine learning model for predicting the survivability of colorectal cancer patients.
-    """)
+    st.header("Project")
+    st.markdown(
+        "This mini app shows a clear dashboard structure with unique widgets and readable visuals. "
+        "It uses synthetic data to demonstrate layout and interaction."
+    )
+
 elif tab == "Data":
-    import plotly.express as px
+    st.header("Health Monitoring (Synthetic)")
 
+    # --- Three widgets ---
+    c1, c2, c3 = st.columns(3)
+    with c1:
+        base_hr = st.number_input("Resting Heart Rate (bpm)", 40, 200, 72)
+    with c2:
+        water = st.slider("Water Intake (liters)", 0.0, 5.0, 2.0, 0.1)
+    with c3:
+        activity = st.selectbox("Activity Type", ["Resting", "Walking", "Running", "Cycling"])
+
+    # --- Data generation ---
     @st.cache_data
-    def get_data():
-        df = pd.DataFrame(
-            np.random.randn(50, 20), columns=("col %d" % i for i in range(20))
-        )
-        return df
+    def make_data(n, base_hr, water, activity):
+        rng = np.random.default_rng(42)
+        boost = {"Resting": 0, "Walking": 8, "Running": 25, "Cycling": 15}[activity]
+        var = max(1.0, 6.0 - 0.5 * water)
+        x = np.arange(n)
+        hr = base_hr + boost + rng.normal(0, var, n)
+        return pd.DataFrame({"Minute": x, "HeartRate": hr.round().astype(int), "Activity": activity})
 
-    @st.cache_data
-    def convert_for_download(df):
-        return df.to_csv().encode("utf-8")
+    df = make_data(120, base_hr, water, activity)
 
-    df = get_data()
-    csv = convert_for_download(df)
-
-    st.download_button(
-    label="Download CSV",
-    data=csv,
-    file_name="data.csv",
-    mime="text/csv",
-    icon=":material/download:",
+    # --- Chart ---
+    st.subheader("Heart Rate Over Time")
+    st.plotly_chart(
+        px.line(df, x="Minute", y="HeartRate", title=f"Heart Rate — {activity}", markers=True),
+        use_container_width=True
     )
-    @st.cache_data
-    def get_data():
-        df = pd.DataFrame(
-            np.random.randn(50, 2), columns=["Smoking", "Cancer risk"]
-        )
-        return df
-    df = get_data()
-    st.write("## Interactive Plot")
-    fig = px.scatter(df, x="Smoking", y="Cancer risk", title="Cancer Risk Scatter Plot")
-    st.plotly_chart(fig, use_container_width=True)
 
-    st.write("## Aquired Data")
-    st.dataframe(df)
-
-    add_slider = st.slider(
-        'Select a range of values',
-        0.0, 100.0, (25.0, 75.0)
-    )
+    # --- Table + download ---
+    st.subheader("Synthetic Data")
+    st.dataframe(df, use_container_width=True)
+    st.download_button("Download CSV", df.to_csv(index=False).encode("utf-8"),
+                       "health_monitoring_synthetic.csv", "text/csv")
