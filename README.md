@@ -61,6 +61,6 @@ _Amanuel Teklehaimanot, 0046728737963, amte1154@su.se_
 
 ## Three Screenshots for the Dashboard
 
-![Data Page](./assets/Screenshot1.png)
-![Data Page2](./assets/Screenshot 2.png)
-![About](./assets/Screenshot 3.png)
+![Data Page](./assets/Screenshot1.jng)
+![Data Page2](./assets/Screenshot2.jng)
+![About](./assets/Screenshot3.jng)
