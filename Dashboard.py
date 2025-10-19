@@ -5,11 +5,11 @@ import plotly.express as px
 
 st.set_page_config(page_title="Amanuel Dashboard", page_icon="👋")
 
-# Sidebar
+
 tab = st.sidebar.radio("Navigate", ["Home", "Project", "Data"])
 st.sidebar.success("Select a tab above.")
 
-# Pages
+
 if tab == "Home":
     st.title("Welcome to Amanuel Dashboard")
     st.caption("Simple Streamlit layout with widgets, a table, and a chart using synthetic data.")
@@ -21,7 +21,7 @@ elif tab == "Project":
         "It uses synthetic data to demonstrate layout and interaction."
     )
 
-    # --- Aim section ---
+   
     st.subheader("Aim")
     st.markdown(
         """
