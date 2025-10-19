@@ -35,7 +35,7 @@ elif tab == "Project":
 elif tab == "Data":
     st.header("Health Monitoring (Synthetic)")
 
-    # --- Three widgets ---
+   
     c1, c2, c3 = st.columns(3)
     with c1:
         base_hr = st.number_input("Resting Heart Rate (bpm)", 40, 200, 72)
@@ -44,7 +44,6 @@ elif tab == "Data":
     with c3:
         activity = st.selectbox("Activity Type", ["Resting", "Walking", "Running", "Cycling"])
 
-    # --- Data generation ---
     @st.cache_data
     def make_data(n, base_hr, water, activity):
         rng = np.random.default_rng(42)
@@ -56,14 +55,12 @@ elif tab == "Data":
 
     df = make_data(120, base_hr, water, activity)
 
-    # --- Chart ---
     st.subheader("Heart Rate Over Time")
     st.plotly_chart(
         px.line(df, x="Minute", y="HeartRate", title=f"Heart Rate — {activity}", markers=True),
         use_container_width=True
     )
 
-    # --- Table + download ---
     st.subheader("Synthetic Data")
     st.dataframe(df, use_container_width=True)
     st.download_button(
