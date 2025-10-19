@@ -1,4 +1,3 @@
-# Dashboard.py (compact)
 import streamlit as st
 import numpy as np
 import pandas as pd
@@ -20,6 +19,17 @@ elif tab == "Project":
     st.markdown(
         "This mini app shows a clear dashboard structure with unique widgets and readable visuals. "
         "It uses synthetic data to demonstrate layout and interaction."
+    )
+
+    # --- Aim section ---
+    st.subheader("Aim")
+    st.markdown(
+        """
+        The aim of this project is to *develop an interactive dashboard capable of predicting the likelihood of heart disease*
+        using health-related parameters such as age, blood pressure, cholesterol level, glucose level, and other clinical risk factors.
+        The dashboard is designed to visualize patient data, enable real-time exploration of predictors, and support informed
+        decision-making for early detection and prevention of cardiovascular conditions.
+        """
     )
 
 elif tab == "Data":
@@ -56,5 +66,9 @@ elif tab == "Data":
     # --- Table + download ---
     st.subheader("Synthetic Data")
     st.dataframe(df, use_container_width=True)
-    st.download_button("Download CSV", df.to_csv(index=False).encode("utf-8"),
-                       "health_monitoring_synthetic.csv", "text/csv")
+    st.download_button(
+        "Download CSV",
+        df.to_csv(index=False).encode("utf-8"),
+        "health_monitoring_synthetic.csv",
+        "text/csv"
+    )
