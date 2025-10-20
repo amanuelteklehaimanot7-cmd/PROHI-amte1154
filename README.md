@@ -58,8 +58,8 @@ Tested on Python 3.12.7 with the following packages:
 
 _Amanuel Teklehaimanot, 0046728737963, amte1154@su.se_
 
-## Dashboard screenshots 
+## Three Screenshots for the Dashboard
 
 ![Data Page](./assets/Screenshot1.jpg)
-![Data Page 2](./assets/Screenshot2.jpg)
+![Data Page2](./assets/Screenshot2.jpg)
 ![About](./assets/Screenshot3.jpg)
